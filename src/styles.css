@@ -1,0 +1,33 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+button {
+  height: 30px;
+  border: none;
+  cursor: pointer;
+}
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.new-cat-btn {
+  margin: 10px;
+  padding: 5px;
+  width: 100px;
+  background-color: #8332a8;
+  color: white;
+}
+.favorites {
+  text-align: left;
+}
+
+/* "https://cdn2.thecatapi.com/images/9tl.jpg" */
+/* "https://cdn2.thecatapi.com/images/MTkwNzQzOQ.gif" */
+/* https://cdn2.thecatapi.com/images/den.jpg */
+/* https://cdn2.thecatapi.com/images/79r.jpg */
+/* https://cdn2.thecatapi.com/images/8vh.jpg
+https://cdn2.thecatapi.com/images/e73.jpg */
+/* https://cdn2.thecatapi.com/images/she0LOHH2.jpg */
+/* https://cdn2.thecatapi.com/images/eaa.jpg */
