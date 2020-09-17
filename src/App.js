@@ -1,36 +1,68 @@
 import React from "react";
 import heart from "./assets/heart.svg";
 import "./styles.css";
-import { get } from "./api-client";
+import { get, create } from "./api-client";
 
 export default function App() {
   const [catPic, setCatPic] = React.useState(null);
+  const [error, setError] = React.useState(null);
+  const [newFavorite, setNewFavorite] = React.useState(null);
   const [favorites, setFavorites] = React.useState([]);
 
   React.useEffect(() => {
     getACatPic();
   }, []);
 
+  React.useEffect(() => {
+    const getFavorites = () => {
+      get(`/favourites?sub_id=jenn_favs`).then(
+        (favs) => {
+          setFavorites(favs);
+        },
+        (error) => {
+          handleError(error);
+        }
+      );
+    };
+    getFavorites();
+  }, [newFavorite]);
+
+  const handleError = (error) => {
+    setError(error);
+    console.error(error);
+  };
+
   const getACatPic = () => {
-    get().then(
-      (cats) => {
-        setCatPic(cats);
+    get("/images/search").then(
+      (cat) => {
+        setCatPic(cat[0]);
       },
       (error) => {
-        alert("errorz are sad");
-        console.error(error);
+        handleError(error);
       }
     );
   };
 
   const addToFavorites = () => {
-    setFavorites([...favorites, catPic[0]]);
+    create("/favourites", {
+      image_id: catPic.id,
+      sub_id: "jenn_favs"
+    }).then(
+      (favoriteId) => {
+        setNewFavorite([...favorites, favoriteId]);
+        alert("Added!");
+      },
+      (error) => {
+        handleError(error);
+      }
+    );
   };
 
   const removeFromFavorites = (favoriteToRemove) => {};
 
   return (
     <div className="App">
+      {error ? <div>Errorz are sad :(</div> : null}
       <h1>The Cat Pics App</h1>
       <h2>Why make a to-do list when you could look at cats instead?</h2>
       <div className="buttons">
@@ -43,15 +75,15 @@ export default function App() {
       </div>
       {catPic ? (
         <div>
-          <img src={catPic[0].url} alt="cat pic" />
-          <div>{catPic[0].url}</div>
+          <img src={catPic.url} alt="cat pic" />
+          <div>{catPic.url}</div>
         </div>
       ) : null}
       <FavoritesTable>
         {favorites.map((fav) => (
           <FavoriteRow
             key={fav.id}
-            fav={fav}
+            fav={fav.image}
             removeFromFavorites={removeFromFavorites}
           />
         ))}
@@ -75,13 +107,13 @@ function FavoritesTable({ children }) {
   );
 }
 
-function FavoriteRow(fav, removeFromFavorites) {
+function FavoriteRow({ fav, removeFromFavorites }) {
   return (
     <tr>
       <td>
-        <button onClick={() => removeFromFavorites(fav.fav)}>X</button>
+        <button onClick={() => removeFromFavorites(fav)}>X</button>
       </td>
-      <td>{fav.fav.url}</td>
+      <td>{fav.url}</td>
     </tr>
   );
 }

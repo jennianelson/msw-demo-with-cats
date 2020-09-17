@@ -1,7 +1,10 @@
-function client(query = null, { body, ...customConfig } = {}) {
-  const baseApi = "https://api.thecatapi.com/v1/images/search";
-  const endpoint = query ? baseApi + query : baseApi;
-  const headers = { "Content-Type": "application/json" };
+function client(endpoint, { body, ...customConfig } = {}) {
+  const baseApi = "https://api.thecatapi.com/v1";
+  const fullUrl = baseApi + endpoint;
+  const headers = {
+    "Content-Type": "application/json",
+    "x-api-key": "739648fb-084b-4ae2-b524-a2c872cc427b"
+  };
   const config = {
     method: body ? "POST" : "GET",
     ...customConfig,
@@ -13,7 +16,7 @@ function client(query = null, { body, ...customConfig } = {}) {
   if (body) {
     config.body = JSON.stringify(body);
   }
-  return window.fetch(endpoint, config).then(async (response) => {
+  return window.fetch(fullUrl, config).then(async (response) => {
     const data = await response.json();
     if (response.ok) {
       return data;
@@ -29,8 +32,8 @@ function query(endpoint, body) {
 function create(endpoint, body) {
   return client(`${endpoint}`, { body: body });
 }
-function get() {
-  return client();
+function get(endpoint) {
+  return client(endpoint);
 }
 function update(endpoint, body) {
   return client(`${endpoint}`, {
