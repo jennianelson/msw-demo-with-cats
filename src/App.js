@@ -36,6 +36,7 @@ export default function App() {
     get("/images/search").then(
       (cat) => {
         setCatPic(cat[0]);
+        console.log(cat);
       },
       (error) => {
         handleError(error);
