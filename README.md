@@ -2,6 +2,8 @@
 
 Demo app for the September BASE React Lunch & Learn to show how to set up and use the MSW library.
 
+Created using Codesandbox
+
 ## Resources
 [MSW Library](https://mswjs.io/)
 
@@ -10,5 +12,3 @@ Demo app for the September BASE React Lunch & Learn to show how to set up and us
 [Demo app on Codesandbox](https://codesandbox.io/s/great-hypatia-zzxpj?file=/src/App.js)
 
 [The Cat API](https://thecatapi.com/)
-
-Created using Codesandbox
