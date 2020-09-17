@@ -47,29 +47,35 @@ export default function App() {
           <div>{catPic[0].url}</div>
         </div>
       ) : null}
-      <div className="favorites">
-        <table>
-          <thead>
-            <tr>
-              <th>Favorites</th>
-            </tr>
-          </thead>
-          <tbody>
-            {favorites.map((fav) => (
-              <FavoriteRow
-                key={fav.id}
-                fav={fav}
-                removeFromFavorites={removeFromFavorites}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <FavoritesTable>
+        {favorites.map((fav) => (
+          <FavoriteRow
+            key={fav.id}
+            fav={fav}
+            removeFromFavorites={removeFromFavorites}
+          />
+        ))}
+      </FavoritesTable>
     </div>
   );
 }
 
-const FavoriteRow = (fav, removeFromFavorites) => {
+function FavoritesTable({ children }) {
+  return (
+    <div className="favorites">
+      <table>
+        <thead>
+          <tr>
+            <th>Favorites</th>
+          </tr>
+        </thead>
+        <tbody>{children}</tbody>
+      </table>
+    </div>
+  );
+}
+
+function FavoriteRow(fav, removeFromFavorites) {
   return (
     <tr>
       <td>
@@ -78,4 +84,4 @@ const FavoriteRow = (fav, removeFromFavorites) => {
       <td>{fav.fav.url}</td>
     </tr>
   );
-};
+}
